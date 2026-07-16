@@ -117,7 +117,7 @@ struct MiniRowView: View {
             Spacer(minLength: 8)
             if let quote {
                 (
-                    Text(QuoteFormatter.price(quote.price))
+                    Text(QuoteFormatter.price(quote.price, currency: quote.currency))
                         .foregroundStyle(.primary)
                     + Text("(" + QuoteFormatter.arrow(for: quote.direction) + QuoteFormatter.percent(quote.changePercent, signed: false) + ")")
                         .foregroundStyle(settings.color(for: quote.direction))
@@ -148,7 +148,7 @@ struct DetailRowView: View {
                 }
             }
             if let quote {
-                Text(QuoteFormatter.price(quote.price))
+                Text(QuoteFormatter.price(quote.price, currency: quote.currency))
                     .font(settings.font(size: settings.scaledFontSize * 1.35, weight: .medium))
                     .foregroundStyle(.primary)
                 HStack(spacing: 8) {

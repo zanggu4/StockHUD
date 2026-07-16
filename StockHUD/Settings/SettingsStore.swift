@@ -7,7 +7,13 @@ enum DisplayMode: String, CaseIterable, Identifiable {
     case detail
 
     var id: String { rawValue }
-    var displayName: String { self == .mini ? "Mini" : "Detail" }
+
+    var displayName: String {
+        switch self {
+        case .mini: return String(localized: "Mini")
+        case .detail: return String(localized: "Detail")
+        }
+    }
 }
 
 enum SizePreset: String, CaseIterable, Identifiable {
@@ -16,7 +22,14 @@ enum SizePreset: String, CaseIterable, Identifiable {
     case large
 
     var id: String { rawValue }
-    var displayName: String { rawValue.capitalized }
+
+    var displayName: String {
+        switch self {
+        case .small: return String(localized: "Small")
+        case .medium: return String(localized: "Medium")
+        case .large: return String(localized: "Large")
+        }
+    }
 
     var scale: Double {
         switch self {

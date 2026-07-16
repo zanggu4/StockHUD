@@ -26,7 +26,7 @@ struct DisplaySettingsView: View {
             .pickerStyle(.segmented)
 
             Slider(value: $settings.fontSize, in: 9...24, step: 1) {
-                Text("Font Size: \(Int(settings.fontSize))pt")
+                sliderLabel("Font Size", value: "\(Int(settings.fontSize))pt")
             }
 
             Picker("Font Family", selection: $settings.fontFamily) {
@@ -36,19 +36,19 @@ struct DisplaySettingsView: View {
             }
 
             Slider(value: $settings.transparency, in: 0.1...1.0) {
-                Text("Opacity: \(Int(settings.transparency * 100))%")
+                sliderLabel("Opacity", value: "\(Int(settings.transparency * 100))%")
             }
 
             Slider(value: $settings.padding, in: 0...30, step: 1) {
-                Text("Padding: \(Int(settings.padding))")
+                sliderLabel("Padding", value: "\(Int(settings.padding))")
             }
 
             Slider(value: $settings.cornerRadius, in: 0...30, step: 1) {
-                Text("Corner Radius: \(Int(settings.cornerRadius))")
+                sliderLabel("Corner Radius", value: "\(Int(settings.cornerRadius))")
             }
 
             Slider(value: $settings.lineSpacing, in: 0...20, step: 1) {
-                Text("Line Spacing: \(Int(settings.lineSpacing))")
+                sliderLabel("Line Spacing", value: "\(Int(settings.lineSpacing))")
             }
 
             Toggle("Shadow", isOn: $settings.shadow)
@@ -60,6 +60,14 @@ struct DisplaySettingsView: View {
             ColorPicker("Flat Color", selection: colorBinding(\.flatColorHex), supportsOpacity: false)
         }
         .padding(20)
+    }
+
+    private func sliderLabel(_ title: LocalizedStringKey, value: String) -> some View {
+        HStack(spacing: 4) {
+            Text(title)
+            Text(verbatim: value)
+                .foregroundStyle(.secondary)
+        }
     }
 
     private func colorBinding(_ keyPath: ReferenceWritableKeyPath<SettingsStore, String>) -> Binding<Color> {

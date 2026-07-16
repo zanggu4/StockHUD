@@ -7,7 +7,7 @@ struct UpdateSettingsView: View {
         Form {
             Picker("Refresh Interval", selection: $settings.refreshInterval) {
                 ForEach(SettingsStore.refreshIntervalChoices, id: \.self) { seconds in
-                    Text(seconds < 60 ? "\(Int(seconds))s" : "1m").tag(seconds)
+                    Text(verbatim: seconds < 60 ? "\(Int(seconds))s" : "1m").tag(seconds)
                 }
             }
 

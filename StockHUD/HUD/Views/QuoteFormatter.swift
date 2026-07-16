@@ -17,7 +17,7 @@ enum QuoteFormatter {
 
     static func price(_ value: Double, currency: String? = nil) -> String {
         priceFormatter.minimumFractionDigits = 2
-        priceFormatter.maximumFractionDigits = 2
+        priceFormatter.maximumFractionDigits = 4
         let number = priceFormatter.string(from: NSNumber(value: value)) ?? String(value)
         let symbol = currency == "USD" ? "$" : ""
         return symbol + number
@@ -32,7 +32,7 @@ enum QuoteFormatter {
         let sign = value >= 0 ? "+" : "-"
         let symbol = currency == "USD" ? "$" : ""
         priceFormatter.minimumFractionDigits = 2
-        priceFormatter.maximumFractionDigits = 2
+        priceFormatter.maximumFractionDigits = 4
         let number = priceFormatter.string(from: NSNumber(value: abs(value))) ?? String(abs(value))
         return "\(sign)\(symbol)\(number)"
     }

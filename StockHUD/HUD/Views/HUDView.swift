@@ -116,9 +116,13 @@ struct MiniRowView: View {
             }
             Spacer(minLength: 8)
             if let quote {
-                Text(QuoteFormatter.arrow(for: quote.direction) + QuoteFormatter.percent(quote.changePercent, signed: false))
-                    .font(settings.font(size: settings.scaledFontSize))
-                    .foregroundStyle(settings.color(for: quote.direction))
+                (
+                    Text(QuoteFormatter.price(quote.price))
+                        .foregroundStyle(.primary)
+                    + Text("(" + QuoteFormatter.arrow(for: quote.direction) + QuoteFormatter.percent(quote.changePercent, signed: false) + ")")
+                        .foregroundStyle(settings.color(for: quote.direction))
+                )
+                .font(settings.font(size: settings.scaledFontSize))
             } else {
                 Text("—")
                     .font(settings.font(size: settings.scaledFontSize))

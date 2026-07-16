@@ -19,7 +19,7 @@ struct UpdateSettingsView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
-            Picker("Click Opens", selection: $settings.linkTarget) {
+            Picker("Double-Click Opens", selection: $settings.linkTarget) {
                 ForEach(LinkTarget.allCases) { target in
                     Text(target.displayName).tag(target)
                 }

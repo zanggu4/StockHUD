@@ -35,7 +35,7 @@ struct HUDView: View {
                 }
             }
             .contentShape(Rectangle())
-            .onTapGesture { open(symbol) }
+            .onTapGesture(count: 2) { open(symbol) }
         }
     }
 

@@ -1,5 +1,7 @@
 # StockHUD
 
+**English** | [한국어](README.ko.md)
+
 An ultra-light, always-on-top stock ticker HUD for macOS.
 
 No charts, no news, no login — just current prices and change, floating over every app like a game HUD.

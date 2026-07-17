@@ -50,7 +50,7 @@ struct HUDView: View {
     }
 
     private var emptyView: some View {
-        Text("No symbols — right-click to open Settings")
+        Text("No symbols — right-click to add one")
             .font(settings.font(size: settings.scaledFontSize))
             .foregroundStyle(.secondary)
     }
@@ -64,6 +64,7 @@ struct HUDView: View {
             Task { await viewModel.refreshNow() }
         }
         Divider()
+        Button("Add Symbol…", action: promptForSymbol)
         if !settings.symbols.isEmpty {
             Menu("Remove Symbol") {
                 ForEach(settings.symbols, id: \.self) { symbol in
@@ -84,6 +85,27 @@ struct HUDView: View {
     private func open(_ symbol: String) {
         guard let url = settings.linkTarget.url(for: symbol) else { return }
         NSWorkspace.shared.open(url)
+    }
+
+    /// An NSAlert rather than a SwiftUI alert: the HUD panel never becomes key,
+    /// so a text field hosted in it would refuse keystrokes. NSAlert brings its
+    /// own window, which can.
+    private func promptForSymbol() {
+        NSApp.activate(ignoringOtherApps: true)
+
+        let alert = NSAlert()
+        alert.messageText = String(localized: "Add Symbol")
+        alert.informativeText = String(localized: "Stocks (NVDA), crypto (BTC-USD), indices (^GSPC), FX (KRW=X)")
+        alert.addButton(withTitle: String(localized: "Add"))
+        alert.addButton(withTitle: String(localized: "Cancel"))
+
+        let field = NSTextField(frame: NSRect(x: 0, y: 0, width: 220, height: 24))
+        field.placeholderString = "AAPL"
+        alert.accessoryView = field
+        alert.window.initialFirstResponder = field
+
+        guard alert.runModal() == .alertFirstButtonReturn else { return }
+        settings.addSymbol(field.stringValue)
     }
 }
 

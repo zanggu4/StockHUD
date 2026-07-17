@@ -14,14 +14,34 @@ final class WatchlistViewModel: ObservableObject {
 
     init(settings: SettingsStore, provider: (any QuoteProvider)? = nil) {
         self.settings = settings
-        self.provider = provider ?? Self.makeProvider(id: settings.apiProvider)
+        self.provider = provider ?? Self.makeProvider(
+            id: settings.apiProvider,
+            credentials: settings.alpacaCredentials
+        )
 
         settings.$apiProvider
             .removeDuplicates()
             .dropFirst()
             .sink { [weak self] id in
-                self?.provider = Self.makeProvider(id: id)
-                self?.start()
+                guard let self else { return }
+                self.provider = Self.makeProvider(id: id, credentials: self.settings.alpacaCredentials)
+                self.start()
+            }
+            .store(in: &cancellables)
+
+        // Debounced: SecureField writes through on every keystroke, and each one
+        // would otherwise rebuild the provider and restart the polling loop.
+        Publishers.CombineLatest(settings.$alpacaKeyId, settings.$alpacaSecret)
+            .dropFirst()
+            .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
+            .removeDuplicates { $0 == $1 }
+            .sink { [weak self] _ in
+                guard let self else { return }
+                self.provider = Self.makeProvider(
+                    id: self.settings.apiProvider,
+                    credentials: self.settings.alpacaCredentials
+                )
+                self.start()
             }
             .store(in: &cancellables)
 
@@ -38,8 +58,21 @@ final class WatchlistViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    static func makeProvider(id: String) -> any QuoteProvider {
-        id == "yahoo" ? YahooFinanceProvider() : WebullProvider()
+    /// Data older than this during a live session means the feed has stalled.
+    /// Generous on purpose: quiet extended-hours symbols can legitimately go
+    /// minutes between trades, while the failure this catches — a provider stuck
+    /// at the 20:00 ET close — is hours wide.
+    private static let staleThreshold: TimeInterval = 15 * 60
+
+    static func makeProvider(
+        id: String,
+        credentials: AlpacaOvernightProvider.Credentials?
+    ) -> any QuoteProvider {
+        let base: any QuoteProvider = id == "yahoo" ? YahooFinanceProvider() : WebullProvider()
+        return OvernightCompositeProvider(
+            base: base,
+            alpaca: AlpacaOvernightProvider(credentials: credentials)
+        )
     }
 
     func start() {
@@ -74,7 +107,17 @@ final class WatchlistViewModel: ObservableObject {
         for (symbol, quote) in fetched {
             quotes[symbol] = quote
         }
-        isStale = fetched.count < symbols.count
-        lastUpdated = Date()
+
+        // Report when the data is from, not when we asked for it — a feed frozen
+        // hours ago used to render with the current time next to it.
+        let newest = fetched.values.map(\.updatedAt).max()
+        lastUpdated = newest
+
+        let missingSymbols = fetched.count < symbols.count
+        let age = newest.map { Date().timeIntervalSince($0) } ?? .infinity
+        // Only while a session is running: outside one, a close that's hours old
+        // is simply the current price.
+        let sessionIsLive = MarketSession.currentUS() != .closed
+        isStale = missingSymbols || (sessionIsLive && age > Self.staleThreshold)
     }
 }

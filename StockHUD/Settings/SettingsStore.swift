@@ -130,6 +130,20 @@ final class SettingsStore: ObservableObject {
     @Published var apiProvider: String {
         didSet { defaults.set(apiProvider, forKey: "apiProvider") }
     }
+    @Published var alpacaKeyId: String {
+        didSet { defaults.set(alpacaKeyId, forKey: "alpacaKeyId") }
+    }
+    @Published var alpacaSecret: String {
+        didSet { defaults.set(alpacaSecret, forKey: "alpacaSecret") }
+    }
+
+    /// nil disables the overnight session entirely; the base provider stands alone.
+    var alpacaCredentials: AlpacaOvernightProvider.Credentials? {
+        let keyId = alpacaKeyId.trimmingCharacters(in: .whitespaces)
+        let secret = alpacaSecret.trimmingCharacters(in: .whitespaces)
+        guard !keyId.isEmpty, !secret.isEmpty else { return nil }
+        return .init(keyId: keyId, secret: secret)
+    }
     @Published var linkTarget: LinkTarget {
         didSet { defaults.set(linkTarget.rawValue, forKey: "linkTarget") }
     }
@@ -164,6 +178,8 @@ final class SettingsStore: ObservableObject {
 
         refreshInterval = defaults.object(forKey: "refreshInterval") as? Double ?? 10
         apiProvider = defaults.string(forKey: "apiProvider") ?? "webull"
+        alpacaKeyId = defaults.string(forKey: "alpacaKeyId") ?? ""
+        alpacaSecret = defaults.string(forKey: "alpacaSecret") ?? ""
         linkTarget = LinkTarget(rawValue: defaults.string(forKey: "linkTarget") ?? "") ?? .tradingView
     }
 

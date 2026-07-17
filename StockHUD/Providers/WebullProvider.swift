@@ -1,8 +1,10 @@
 import Foundation
 
 /// Quotes from Webull's unofficial anonymous API.
-/// One batched request covers all resolvable symbols and includes extended-session
-/// prices (pre-market, after-hours, and possibly overnight via Blue Ocean ATS).
+/// One batched request covers all resolvable symbols and includes pre-market and
+/// after-hours prices. It has no overnight data — the endpoint always reports
+/// `overnight: 0` and freezes at the 20:00 ET close, because the consolidated
+/// tape doesn't run overnight. See `OvernightCompositeProvider` for that session.
 /// Symbols Webull can't resolve (e.g. crypto like BTC-USD) fall back to Yahoo.
 actor WebullProvider: QuoteProvider {
     nonisolated let name = "Webull"
@@ -104,7 +106,9 @@ actor WebullProvider: QuoteProvider {
 
         let tickers = try JSONDecoder().decode([TickerQuote].self, from: data)
         let clockSession = MarketSession.currentUS()
-        let isExtended = clockSession == .preMarket || clockSession == .afterHours || clockSession == .overnight
+        // Overnight is excluded: `pPrice` stops updating at the 20:00 ET close,
+        // so claiming it as an overnight price would badge stale data as live.
+        let isExtended = clockSession == .preMarket || clockSession == .afterHours
 
         var quotes: [String: Quote] = [:]
         for ticker in tickers {

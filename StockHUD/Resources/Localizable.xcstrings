@@ -81,6 +81,126 @@
         }
       }
     },
+    "Adds live prices for the 8PM–4AM ET overnight session, which neither Webull nor Yahoo carries. Free Alpaca paper-trading keys work. Leave empty to disable.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ergänzt Live-Kurse für die Overnight-Sitzung von 20–4 Uhr ET, die weder Webull noch Yahoo bietet. Kostenlose Alpaca-Paper-Trading-Schlüssel genügen. Leer lassen zum Deaktivieren."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Añade precios en vivo de la sesión nocturna (20:00–4:00 ET), que ni Webull ni Yahoo ofrecen. Sirven claves gratuitas de paper trading de Alpaca. Déjalo vacío para desactivar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute les cours en direct de la séance de nuit (20h–4h ET), absente de Webull et Yahoo. Les clés gratuites de paper trading Alpaca suffisent. Laisser vide pour désactiver."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Webull・Yahoo にはない米東部時間 20:00〜4:00 のオーバーナイト・セッションのリアルタイム価格を追加します。Alpaca の無料ペーパートレード用キーで動作します。空欄で無効。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Webull과 Yahoo 모두 제공하지 않는 미 동부시간 20:00~04:00 오버나잇 세션의 실시간 가격을 추가합니다. Alpaca 무료 페이퍼 트레이딩 키로 동작합니다. 비워두면 비활성화됩니다."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "为 Webull 与 Yahoo 均不提供的美东时间 20:00–4:00 夜盘时段添加实时价格。Alpaca 免费模拟交易密钥即可使用。留空则停用。"
+          }
+        }
+      }
+    },
+    "Alpaca API Key": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alpaca-API-Schlüssel"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave de API de Alpaca"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clé d'API Alpaca"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alpaca APIキー"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alpaca API 키"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alpaca API 密钥"
+          }
+        }
+      }
+    },
+    "Alpaca Secret Key": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geheimer Alpaca-Schlüssel"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clave secreta de Alpaca"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clé secrète Alpaca"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alpaca シークレットキー"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alpaca 시크릿 키"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alpaca 私密密钥"
+          }
+        }
+      }
+    },
     "Always On Top": {
       "localizations": {
         "de": {
@@ -1841,42 +1961,42 @@
         }
       }
     },
-    "Webull covers pre-market / after-hours prices and falls back to Yahoo for symbols it doesn't carry (e.g. crypto).": {
+    "Webull covers pre-market / after-hours prices and falls back to Yahoo for symbols it doesn't carry (e.g. crypto). Neither carries the overnight session.": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Webull liefert Pre-Market-/After-Hours-Kurse; für nicht verfügbare Symbole (z. B. Krypto) wird Yahoo verwendet."
+            "value": "Webull liefert Pre-Market-/After-Hours-Kurse; für nicht verfügbare Symbole (z. B. Krypto) wird Yahoo verwendet. Keiner von beiden bietet die Overnight-Sitzung."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Webull cubre precios pre-market y after-hours; para símbolos que no tiene (p. ej. cripto) usa Yahoo."
+            "value": "Webull cubre precios pre-market y after-hours; para símbolos que no tiene (p. ej. cripto) usa Yahoo. Ninguno cubre la sesión nocturna."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Webull couvre les cours pre-market/after-hours ; pour les symboles absents (ex. crypto), Yahoo est utilisé."
+            "value": "Webull couvre les cours pre-market/after-hours ; pour les symboles absents (ex. crypto), Yahoo est utilisé. Aucun des deux ne couvre la séance de nuit."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "Webullはプレ・アフターマーケット価格に対応し、扱いのないシンボル（例: 仮想通貨）はYahooを使用します。"
+            "value": "Webullはプレ・アフターマーケット価格に対応し、扱いのないシンボル（例: 仮想通貨）はYahooを使用します。 どちらもオーバーナイト・セッションには対応していません。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "Webull은 프리장/애프터장 가격을 지원하며, 없는 심볼(예: 크립토)은 자동으로 Yahoo를 사용합니다."
+            "value": "Webull은 프리장/애프터장 가격을 지원하며, 없는 심볼(예: 크립토)은 자동으로 Yahoo를 사용합니다. 둘 다 오버나잇 세션은 지원하지 않습니다."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "Webull 支持盘前/盘后价格；不支持的代码（如加密货币）将自动使用 Yahoo。"
+            "value": "Webull 支持盘前/盘后价格；不支持的代码（如加密货币）将自动使用 Yahoo。 两者均不支持夜盘时段。"
           }
         }
       }

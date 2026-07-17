@@ -8,3 +8,7 @@ StockHUD.xcodeproj/
 xcuserdata/
 DerivedData/
 build/
+
+# Local secrets — never commit
+.env
+.env.*
